@@ -1,8 +1,8 @@
 import {
-    Container
-} from 'pixi.js';
+    Area
+} from './Area';
 
-class DiscardArea extends Container {
+class DiscardArea extends Area {
 
     constructor() {
         super();
@@ -17,19 +17,6 @@ class DiscardArea extends Container {
     }
     *
     */
-    layout(info) {
-        const d = info.direction
-        if ('down' == d) {
-            this.layoutDown(info);
-        } else if ('up' == d) {
-            this.layoutUp(info);
-        } else if ('right' == d) {
-            this.layoutRight(info);
-        } else if ('left' == d) {
-            this.layoutLeft(info);
-        }
-    }
-
     layoutDown(info) {
         const children = this.children;
         let x = 0;
@@ -118,44 +105,6 @@ class DiscardArea extends Container {
         });
 
         this.moveToCenter(1, -1, this.calcWH(info));
-    }
-
-    calcWH(info) {
-        return {
-            width: info.width || this.width,
-            height: info.height || this.height
-        }
-    }
-
-    moveToCenter(x, y, wh) {
-        const children = this.children;
-        const offsetX = wh.width / 2 * x;
-        const offsetY = wh.height / 2 * y;
-        children.forEach((child) => {
-            child.x += offsetX;
-            child.y += offsetY;
-        });
-    }
-
-    showEdge() {
-        let rect = null;
-        this.children.forEach((child) => {
-            let r = new PIXI.Rectangle(child.x - child.width * child.anchor.x,
-                child.y - child.height * child.anchor.y,
-                child.width, child.height);
-            if (null == rect) {
-                rect = r;
-            } else {
-                rect.enlarge(r);
-            }
-        })
-
-        if (null == this.edge) {
-            this.edge = new PIXI.Graphics();
-            this.edge.lineStyle(1, 0xFF3300, 1);
-            this.addChild(this.edge);
-        }
-        this.edge.drawRect(rect.x, rect.y, rect.width, rect.height);
     }
 
 }
