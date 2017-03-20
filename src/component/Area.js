@@ -1,6 +1,9 @@
 import {
     Container
 } from 'pixi.js';
+import {
+    Constant
+} from '../utils/Constant';
 
 class Area extends Container {
 
@@ -18,6 +21,12 @@ class Area extends Container {
     *
     */
     layout(info) {
+        if (info.intervalX) {
+            info.intervalX = info.intervalX * Constant.TileScale;
+        }
+        if (info.intervalY) {
+            info.intervalY = info.intervalY * Constant.TileScale;
+        }
         const d = info.direction
         if ('down' == d) {
             this.layoutDown(info);

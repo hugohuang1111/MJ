@@ -19,6 +19,9 @@ import {
 import {
     QueueArea
 } from '../component/QueueArea';
+import {
+    PileArea
+} from '../component/PileArea';
 
 const MJ_TILES_JSON = './asset/img/mjtiles.json';
 
@@ -60,6 +63,33 @@ class GameStage extends BaseStage {
                 }, {
                     "suit": 1,
                     "rank": 8
+                }, {
+                    "suit": 1,
+                    "rank": 2
+                }, {
+                    "suit": 2,
+                    "rank": 3
+                }, {
+                    "suit": 3,
+                    "rank": 6
+                }, {
+                    "suit": 3,
+                    "rank": 9
+                }, {
+                    "suit": 1,
+                    "rank": 8
+                }, {
+                    "suit": 1,
+                    "rank": 2
+                }, {
+                    "suit": 2,
+                    "rank": 3
+                }, {
+                    "suit": 3,
+                    "rank": 6
+                }, {
+                    "suit": 3,
+                    "rank": 9
                 }],
                 "discards": [{
                     "suit": 2,
@@ -71,35 +101,82 @@ class GameStage extends BaseStage {
                     "suit": 3,
                     "rank": 4
                 }],
-                "meldcards": [{
-                    "type": 1,
-                    "tiles": [{
-                        "suit": 1,
-                        "rank": 4
-                    }, {
-                        "suit": 1,
-                        "rank": 4
-                    }, {
-                        "suit": 1,
-                        "rank": 4
-                    }, {
-                        "suit": 1,
-                        "rank": 4
-                    }]
-                }, {
-                    "type": 2,
-                    "tiles": [{
-                        "suit": 2,
-                        "rank": 7
-                    }, {
-                        "suit": 2,
-                        "rank": 7
-                    }, {
-                        "suit": 2,
-                        "rank": 7
-                    }]
-                }],
                 "wallcards": [{
+                    "suit": 1,
+                    "rank": 2
+                }, {
+                    "suit": 1,
+                    "rank": 2
+                }, {
+                    "suit": 1,
+                    "rank": 2
+                }, {
+                    "suit": 1,
+                    "rank": 2
+                }, {
+                    "suit": 1,
+                    "rank": 2
+                }, {
+                    "suit": 1,
+                    "rank": 2
+                }, {
+                    "suit": 1,
+                    "rank": 2
+                }, {
+                    "suit": 1,
+                    "rank": 2
+                }, {
+                    "suit": 1,
+                    "rank": 2
+                }, {
+                    "suit": 1,
+                    "rank": 2
+                }, {
+                    "suit": 1,
+                    "rank": 2
+                }, {
+                    "suit": 1,
+                    "rank": 2
+                }, {
+                    "suit": 1,
+                    "rank": 2
+                }, {
+                    "suit": 1,
+                    "rank": 2
+                }, {
+                    "suit": 1,
+                    "rank": 2
+                }, {
+                    "suit": 1,
+                    "rank": 2
+                }, {
+                    "suit": 1,
+                    "rank": 2
+                }, {
+                    "suit": 1,
+                    "rank": 2
+                }, {
+                    "suit": 1,
+                    "rank": 2
+                }, {
+                    "suit": 1,
+                    "rank": 2
+                }, {
+                    "suit": 1,
+                    "rank": 2
+                }, {
+                    "suit": 1,
+                    "rank": 2
+                }, {
+                    "suit": 1,
+                    "rank": 2
+                }, {
+                    "suit": 1,
+                    "rank": 2
+                }, {
+                    "suit": 1,
+                    "rank": 2
+                }, {
                     "suit": 1,
                     "rank": 2
                 }, {
@@ -122,6 +199,39 @@ class GameStage extends BaseStage {
                 }, {
                     "suit": 1,
                     "rank": 9
+                }, {
+                    "suit": 1,
+                    "rank": 2
+                }, {
+                    "suit": 2,
+                    "rank": 4
+                }, {
+                    "suit": 1,
+                    "rank": 9
+                }, {
+                    "suit": 1,
+                    "rank": 2
+                }, {
+                    "suit": 2,
+                    "rank": 4
+                }, {
+                    "suit": 1,
+                    "rank": 9
+                }, {
+                    "suit": 1,
+                    "rank": 2
+                }, {
+                    "suit": 2,
+                    "rank": 4
+                }, {
+                    "suit": 1,
+                    "rank": 9
+                }, {
+                    "suit": 1,
+                    "rank": 2
+                }, {
+                    "suit": 2,
+                    "rank": 4
                 }],
                 "discards": [{
                     "suit": 3,
@@ -133,11 +243,82 @@ class GameStage extends BaseStage {
                     "suit": 1,
                     "rank": 4
                 }],
-                "meldcards": [{
+                "wallcards": [{
                     "suit": 1,
                     "rank": 2
-                }],
-                "wallcards": [{
+                }, {
+                    "suit": 1,
+                    "rank": 2
+                }, {
+                    "suit": 1,
+                    "rank": 2
+                }, {
+                    "suit": 1,
+                    "rank": 2
+                }, {
+                    "suit": 1,
+                    "rank": 2
+                }, {
+                    "suit": 1,
+                    "rank": 2
+                }, {
+                    "suit": 1,
+                    "rank": 2
+                }, {
+                    "suit": 1,
+                    "rank": 2
+                }, {
+                    "suit": 1,
+                    "rank": 2
+                }, {
+                    "suit": 1,
+                    "rank": 2
+                }, {
+                    "suit": 1,
+                    "rank": 2
+                }, {
+                    "suit": 1,
+                    "rank": 2
+                }, {
+                    "suit": 1,
+                    "rank": 2
+                }, {
+                    "suit": 1,
+                    "rank": 2
+                }, {
+                    "suit": 1,
+                    "rank": 2
+                }, {
+                    "suit": 1,
+                    "rank": 2
+                }, {
+                    "suit": 1,
+                    "rank": 2
+                }, {
+                    "suit": 1,
+                    "rank": 2
+                }, {
+                    "suit": 1,
+                    "rank": 2
+                }, {
+                    "suit": 1,
+                    "rank": 2
+                }, {
+                    "suit": 1,
+                    "rank": 2
+                }, {
+                    "suit": 1,
+                    "rank": 2
+                }, {
+                    "suit": 1,
+                    "rank": 2
+                }, {
+                    "suit": 1,
+                    "rank": 2
+                }, {
+                    "suit": 1,
+                    "rank": 2
+                }, {
                     "suit": 1,
                     "rank": 2
                 }, {
@@ -169,8 +350,17 @@ class GameStage extends BaseStage {
                     "rank": 4
                 }],
                 "meldcards": [{
-                    "suit": 1,
-                    "rank": 2
+                    "type": 1,
+                    "tiles": [{
+                        "suit": 2,
+                        "rank": 7
+                    }, {
+                        "suit": 2,
+                        "rank": 7
+                    }, {
+                        "suit": 2,
+                        "rank": 7
+                    }]
                 }],
                 "wallcards": [{
                     "suit": 1,
@@ -204,8 +394,17 @@ class GameStage extends BaseStage {
                     "rank": 9
                 }],
                 "meldcards": [{
-                    "suit": 1,
-                    "rank": 2
+                    "type": 1,
+                    "tiles": [{
+                        "suit": 3,
+                        "rank": 4
+                    }, {
+                        "suit": 3,
+                        "rank": 4
+                    }, {
+                        "suit": 3,
+                        "rank": 4
+                    }]
                 }],
                 "wallcards": [{
                     "suit": 1,
@@ -229,6 +428,7 @@ class GameStage extends BaseStage {
     onMouseDown() {}
 
     updateScene() {
+        console.log(`win width:${this.winSize.width} height:${this.winSize.height}`);
         let sp = Utils.createSprite(Constant.RES.BG_GAME);
         Utils.fillbg(sp, this.renderer)
         Utils.center(sp, this.renderer)
@@ -269,37 +469,132 @@ class GameStage extends BaseStage {
 
     updateTilesDown(tiles) {
         let x = this.winSize.width / 2;
-        let y = this.winSize.height / 2 + 200;
-        const c = new PIXI.Container();
-        // c.addChild(this.updateDiscardAreaDown(tiles.discards));
-        // c.addChild(this.updateWallcardAreaDown(tiles.wallcards));
-        c.addChild(this.updateHoldcardAreaDown(tiles.holdcards));
-        c.position.set(x, y);
+        let y = this.winSize.height / 2 + 100;
 
+        const c = new QueueArea();
+        let area = this.updateDiscardAreaDown(tiles.discards);
+        if (null != area) {
+            c.addChild(area);
+            area.position.set(x, y);
+        }
+        area = this.updateWallcardAreaDown(tiles.wallcards);
+        y += 100;
+        if (null != area) {
+            c.addChild(area);
+            area.position.set(x, y);
+        }
+
+        area = new QueueArea();
+        const meldArea = this.updateMeldcardAreaDown(tiles.meldcards);
+        if (null != meldArea) {
+            area.addChild(meldArea);
+        }
+        area.addChild(this.updateHoldcardAreaDown(tiles.holdcards));
+        area.layout({
+            intervalX: 40,
+            direction: 'down'
+        });
+        c.addChild(area);
+        y += 100;
+        area.position.set(x, y);
         return c;
     }
     updateTilesRight(tiles) {
-        const c = new PIXI.Container();
-        // c.addChild(this.updateDiscardAreaRight(tiles.discards));
-        // c.addChild(this.updateWallcardAreaRight(tiles.wallcards));
-        c.addChild(this.updateHoldcardAreaRight(tiles.holdcards));
-        c.position.set(this.winSize.width / 2 + 200, this.winSize.height / 2);
+        let x = this.winSize.width / 2 + 100;
+        let y = this.winSize.height / 2;
+
+        const c = new QueueArea();
+        let area = this.updateDiscardAreaRight(tiles.discards);
+        if (null != area) {
+            c.addChild(area);
+            area.position.set(x, y);
+        }
+        area = this.updateWallcardAreaRight(tiles.wallcards);
+        x += 100;
+        if (null != area) {
+            c.addChild(area);
+            area.position.set(x, y);
+        }
+
+        area = new QueueArea();
+        const meldArea = this.updateMeldcardAreaRight(tiles.meldcards);
+        if (null != meldArea) {
+            area.addChild(meldArea);
+        }
+        area.addChild(this.updateHoldcardAreaRight(tiles.holdcards));
+        area.layout({
+            intervalY: 40,
+            direction: 'right'
+        });
+        c.addChild(area);
+        x += 100;
+        area.position.set(x, y);
         return c;
     }
     updateTilesUp(tiles) {
-        const c = new PIXI.Container();
-        // c.addChild(this.updateDiscardAreaUp(tiles.discards));
-        // c.addChild(this.updateWallcardAreaUp(tiles.wallcards));
-        c.addChild(this.updateHoldcardAreaUp(tiles.holdcards));
-        c.position.set(this.winSize.width / 2, this.winSize.height / 2 - 200);
+        let x = this.winSize.width / 2;
+        let y = this.winSize.height / 2 - 100;
+
+        const c = new QueueArea();
+        let area = this.updateDiscardAreaUp(tiles.discards);
+        if (null != area) {
+            c.addChild(area);
+            area.position.set(x, y);
+        }
+        area = this.updateWallcardAreaUp(tiles.wallcards);
+        y -= 100;
+        if (null != area) {
+            c.addChild(area);
+            area.position.set(x, y);
+        }
+
+        area = new QueueArea();
+        const meldArea = this.updateMeldcardAreaUp(tiles.meldcards);
+        if (null != meldArea) {
+            area.addChild(meldArea);
+        }
+        area.addChild(this.updateHoldcardAreaUp(tiles.holdcards));
+        area.layout({
+            intervalX: 40,
+            direction: 'up'
+        });
+        c.addChild(area);
+        y -= 100;
+        area.position.set(x, y);
+
         return c;
     }
     updateTilesLeft(tiles) {
-        const c = new PIXI.Container();
-        // c.addChild(this.updateDiscardAreaLeft(tiles.discards));
-        // c.addChild(this.updateWallcardAreaLeft(tiles.wallcards));
-        c.addChild(this.updateHoldcardAreaLeft(tiles.holdcards));
-        c.position.set(this.winSize.width / 2 - 200, this.winSize.height / 2);
+        let x = this.winSize.width / 2 - 100;
+        let y = this.winSize.height / 2;
+
+        const c = new QueueArea();
+        let area = this.updateDiscardAreaLeft(tiles.discards);
+        if (null != area) {
+            c.addChild(area);
+            area.position.set(x, y);
+        }
+        area = this.updateWallcardAreaLeft(tiles.wallcards);
+        x -= 100;
+        if (null != area) {
+            c.addChild(area);
+            area.position.set(x, y);
+        }
+
+        area = new QueueArea();
+        const meldArea = this.updateMeldcardAreaLeft(tiles.meldcards);
+        if (null != meldArea) {
+            area.addChild(meldArea);
+        }
+        area.addChild(this.updateHoldcardAreaLeft(tiles.holdcards));
+        area.layout({
+            intervalY: 40,
+            direction: 'left'
+        });
+        c.addChild(area);
+        x -= 100;
+        area.position.set(x, y);
+
         return c;
     }
 
@@ -317,7 +612,7 @@ class GameStage extends BaseStage {
         c.layout({
             intervalX: -7,
             intervalY: -34,
-            width: 500,
+            width: 300,
             direction: 'down'
         });
 
@@ -337,7 +632,7 @@ class GameStage extends BaseStage {
         c.layout({
             intervalX: -7,
             intervalY: -36,
-            height: 500,
+            height: 300,
             direction: 'right'
         });
         return c;
@@ -356,7 +651,7 @@ class GameStage extends BaseStage {
         c.layout({
             intervalX: -7,
             intervalY: -34,
-            width: 500,
+            width: 300,
             direction: 'up'
         });
         return c;
@@ -375,7 +670,7 @@ class GameStage extends BaseStage {
         c.layout({
             intervalX: -7,
             intervalY: -36,
-            height: 500,
+            height: 300,
             direction: 'left'
         });
         return c;
@@ -396,6 +691,9 @@ class GameStage extends BaseStage {
             width: 500,
             direction: 'down'
         });
+
+        c.showEdge();
+        this.showNodeInfo(c, 'down:')
 
         return c;
     }
@@ -484,8 +782,6 @@ class GameStage extends BaseStage {
             direction: 'right'
         });
 
-        this.showNodeInfo(c, 'right:')
-
         return c;
     }
     updateHoldcardAreaUp(tiles) {
@@ -514,6 +810,160 @@ class GameStage extends BaseStage {
         });
         c.layout({
             intervalY: -74,
+            direction: 'left'
+        });
+        return c;
+    }
+
+    updateMeldcardAreaDown(melds) {
+        if (null == melds) {
+            return;
+        }
+        const c = new QueueArea();
+        melds.forEach((meld) => {
+            const area = this.updatePilecardAreaDown(meld.tiles);
+            if (null != area) {
+                c.addChild(area);
+            }
+        });
+        c.layout({
+            intervalX: 10,
+            direction: 'down'
+        })
+        return c;
+    }
+    updateMeldcardAreaRight(melds) {
+        if (null == melds) {
+            return;
+        }
+        const c = new QueueArea();
+        melds.forEach((meld) => {
+            const area = this.updatePilecardAreaRight(meld.tiles);
+            if (null != area) {
+                c.addChild(area);
+            }
+        });
+        c.layout({
+            intervalX: 10,
+            direction: 'right'
+        })
+        return c;
+    }
+    updateMeldcardAreaUp(melds) {
+        if (null == melds) {
+            return;
+        }
+        const c = new QueueArea();
+        melds.forEach((meld) => {
+            const area = this.updatePilecardAreaUp(meld.tiles);
+            if (null != area) {
+                c.addChild(area);
+            }
+        });
+        c.layout({
+            intervalX: 10,
+            direction: 'up'
+        })
+        return c;
+    }
+    updateMeldcardAreaLeft(melds) {
+        if (null == melds) {
+            return;
+        }
+        const c = new QueueArea();
+        melds.forEach((meld) => {
+            const area = this.updatePilecardAreaLeft(meld.tiles);
+            if (null != area) {
+                c.addChild(area);
+            }
+        });
+        c.layout({
+            intervalX: 10,
+            direction: 'left'
+        })
+        return c;
+    }
+    updatePilecardAreaDown(tiles) {
+        if (null == tiles) {
+            return;
+        }
+        const c = new PileArea();
+        const tileInfo = {};
+        tileInfo.showFace = true;
+        tileInfo.tileDir = GameStage.TileDir.Horizontal;
+        tileInfo.locationDir = GameStage.SeatDirection.Down;
+        tiles.forEach((tile) => {
+            tileInfo.suit = tile.suit;
+            tileInfo.rank = tile.rank;
+            c.addChild(this.getTileSprite(tileInfo));
+        });
+        c.layout({
+            intervalX: -6,
+            intervalY: -31,
+            direction: 'down'
+        });
+
+        return c;
+    }
+    updatePilecardAreaRight(tiles) {
+        if (null == tiles) {
+            return;
+        }
+        const c = new PileArea();
+        const tileInfo = {};
+        tileInfo.showFace = true;
+        tileInfo.tileDir = GameStage.TileDir.Horizontal;
+        tileInfo.locationDir = GameStage.SeatDirection.Right;
+        tiles.forEach((tile) => {
+            tileInfo.suit = tile.suit;
+            tileInfo.rank = tile.rank;
+            c.addChild(this.getTileSprite(tileInfo));
+        });
+        c.layout({
+            intervalX: -25,
+            intervalY: -36,
+            direction: 'right'
+        });
+        return c;
+    }
+    updatePilecardAreaUp(tiles) {
+        if (null == tiles) {
+            return;
+        }
+        const c = new PileArea();
+        const tileInfo = {};
+        tileInfo.showFace = true;
+        tileInfo.tileDir = GameStage.TileDir.Horizontal;
+        tileInfo.locationDir = GameStage.SeatDirection.Up;
+        tiles.forEach((tile) => {
+            tileInfo.suit = tile.suit;
+            tileInfo.rank = tile.rank;
+            c.addChild(this.getTileSprite(tileInfo));
+        });
+        c.layout({
+            intervalX: -6,
+            intervalY: -31,
+            direction: 'up'
+        });
+        return c;
+    }
+    updatePilecardAreaLeft(tiles) {
+        if (null == tiles) {
+            return;
+        }
+        const c = new PileArea();
+        const tileInfo = {};
+        tileInfo.showFace = true;
+        tileInfo.tileDir = GameStage.TileDir.Horizontal;
+        tileInfo.locationDir = GameStage.SeatDirection.Left;
+        tiles.forEach((tile) => {
+            tileInfo.suit = tile.suit;
+            tileInfo.rank = tile.rank;
+            c.addChild(this.getTileSprite(tileInfo));
+        });
+        c.layout({
+            intervalX: 10,
+            intervalY: -36,
             direction: 'left'
         });
         return c;
@@ -731,7 +1181,7 @@ class GameStage extends BaseStage {
             }
         }
 
-        console.log('ResName:' + resName);
+        // console.log('ResName:' + resName);
         const sp = new PIXI.Sprite(
             this.mjTilesTextures[Constant.RES[resName]]
         )
@@ -745,6 +1195,9 @@ class GameStage extends BaseStage {
         if (tileInfo.scale) {
             sp.scale.x = tileInfo.scale;
             sp.scale.y = tileInfo.scale;
+        } else if (Constant.TileScale) {
+            sp.scale.x = Constant.TileScale;
+            sp.scale.y = Constant.TileScale;
         }
 
         return sp;

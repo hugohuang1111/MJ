@@ -183,7 +183,8 @@ const Constant = {
         TILE_UP_H_NAN: 'up/up_h_nan.png',
         TILE_UP_H_XI: 'up/up_h_xi.png',
         TILE_UP_H_ZHONG: 'up/up_h_zhong.png',
-    }
+    },
+    TileScale: 0.5
 
 }
 
