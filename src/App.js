@@ -11,7 +11,7 @@ import {
 
 let gInstance = null;
 
-class App {
+class App extends PIXI.Application {
 
     static getInstance() {
         if (null == gInstance) {
@@ -23,6 +23,7 @@ class App {
 
     constructor() {
         if (null == gInstance) {
+            super();
             gInstance = this
 
             this.mouseDown = [0, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -37,15 +38,9 @@ class App {
     }
 
     run() {
-        //Create the renderer
-        const renderer = PIXI.autoDetectRenderer();
-        this.renderer = renderer;
-
+        const renderer = this.renderer;
         //Add the canvas to the HTML document
-        document.body.appendChild(renderer.view);
-
-        //Create a container object called the `stage`
-        const stage = new GameStage(renderer);
+        document.body.appendChild(this.renderer.view);
 
         //whold view
         renderer.view.style.position = "absolute";
@@ -53,27 +48,42 @@ class App {
         renderer.autoResize = true;
         renderer.resize(window.innerWidth, window.innerHeight);
 
-        //Tell the `renderer` to `render` the `stage`
-        this.show(stage)
+        this.pushStage(new GameStage(this.renderer));
+
+        this.ticker.add((time) => {
+            this.stage.children.forEach((child) => {
+                if (child.visible) {
+                    child.update(time);
+                }
+            })
+            renderer.render(this.stage);
+        });
     }
 
-    show(stage) {
-        if (null != this.curStage) {
-            this.curStage.release();
+    pushStage(stage) {
+        if (this.stage.children.length > 0) {
+            this.stage.children[-1].visible = false;
         }
-        stage.show(this.renderer);
-        this.curStage = stage;
+        this.stage.addChild(stage);
+    }
+
+    popStage() {
+        if (1 == this.stage.children.length) {
+            console.log('only one child exist');
+            return;
+        }
+        this.removeChildAt(-1);
+        this.stage.children[-1].visible = true;
     }
 
     loadComponents() {
         Input.getInstance();
-
     }
 
     getWinSize() {
         return {
-            width: this.renderer.width,
-            height: this.renderer.height
+            width: window.innerWidth,
+            height: window.innerHeight
         }
     }
 

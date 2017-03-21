@@ -1,0 +1,256 @@
+{
+    "frames": {
+        "number0": {
+            "frame": {
+                "x": 0,
+                "y": 0,
+                "w": 21,
+                "h": 27
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 21,
+                "h": 27
+            },
+            "sourceSize": {
+                "w": 21,
+                "h": 27
+            },
+            "pivot": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        "number1": {
+            "frame": {
+                "x": 21,
+                "y": 0,
+                "w": 21,
+                "h": 27
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 21,
+                "h": 27
+            },
+            "sourceSize": {
+                "w": 21,
+                "h": 27
+            },
+            "pivot": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        "number2": {
+            "frame": {
+                "x": 42,
+                "y": 0,
+                "w": 21,
+                "h": 27
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 21,
+                "h": 27
+            },
+            "sourceSize": {
+                "w": 21,
+                "h": 27
+            },
+            "pivot": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        "number3": {
+            "frame": {
+                "x": 63,
+                "y": 0,
+                "w": 21,
+                "h": 27
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 21,
+                "h": 27
+            },
+            "sourceSize": {
+                "w": 21,
+                "h": 27
+            },
+            "pivot": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        "number4": {
+            "frame": {
+                "x": 84,
+                "y": 0,
+                "w": 21,
+                "h": 27
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 21,
+                "h": 27
+            },
+            "sourceSize": {
+                "w": 21,
+                "h": 27
+            },
+            "pivot": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        "number5": {
+            "frame": {
+                "x": 105,
+                "y": 0,
+                "w": 21,
+                "h": 27
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 21,
+                "h": 27
+            },
+            "sourceSize": {
+                "w": 21,
+                "h": 27
+            },
+            "pivot": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        "number6": {
+            "frame": {
+                "x": 126,
+                "y": 0,
+                "w": 21,
+                "h": 27
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 21,
+                "h": 27
+            },
+            "sourceSize": {
+                "w": 21,
+                "h": 27
+            },
+            "pivot": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        "number7": {
+            "frame": {
+                "x": 147,
+                "y": 0,
+                "w": 21,
+                "h": 27
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 21,
+                "h": 27
+            },
+            "sourceSize": {
+                "w": 21,
+                "h": 27
+            },
+            "pivot": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        "number8": {
+            "frame": {
+                "x": 147,
+                "y": 0,
+                "w": 21,
+                "h": 27
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 21,
+                "h": 27
+            },
+            "sourceSize": {
+                "w": 21,
+                "h": 27
+            },
+            "pivot": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        "number9": {
+            "frame": {
+                "x": 168,
+                "y": 0,
+                "w": 21,
+                "h": 27
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 21,
+                "h": 27
+            },
+            "sourceSize": {
+                "w": 21,
+                "h": 27
+            },
+            "pivot": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        }
+    },
+    "meta": {
+        "app": "http://www.codeandweb.com/texturepacker",
+        "version": "1.0",
+        "image": "numbers.png",
+        "format": "RGBA8888",
+        "size": {
+            "w": 210,
+            "h": 27
+        },
+        "scale": "1",
+        "smartupdate": "$TexturePacker:SmartUpdate:4952b1750ad3af1ab2e3455e6bb0e71a:e510ca4be156c8dc4dd92211531a08a8:9cbe1e25ba57f084b253e5bc185ee1b2$"
+    }
+}

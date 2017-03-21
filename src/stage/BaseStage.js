@@ -3,13 +3,15 @@ import {
     Input
 } from '../component/Input';
 
-class BaseStage {
+class BaseStage extends PIXI.Container {
 
     constructor(renderer) {
-        this.stage = new PIXI.Container();
+        super();
+        this.stage = this;
         this.renderer = renderer;
         this.onMouseDown = this.onMouseDown.bind(this);
         Input.getInstance().observer(Input.EVENT.MOUSE_DOWN, this.onMouseDown);
+        this.components = new Array();
     }
 
     loadRes(resArray, onFinish) {
@@ -41,12 +43,10 @@ class BaseStage {
         };
     }
 
-    show(renderer) {
-        let r = renderer
-        if (null == r) {
-            r = this.renderer
-        }
-        r.render(this.stage);
+    update(time) {
+        this.components.forEach((comp) => {
+            comp.update(time);
+        })
     }
 
     onMouseDown(evt) {}

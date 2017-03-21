@@ -22,20 +22,25 @@ import {
 import {
     PileArea
 } from '../component/PileArea';
+import {
+    GameTimer
+} from '../component/GameTimer';
 
 const MJ_TILES_JSON = './asset/img/mjtiles.json';
+const MJ_TIMER_NUMBERS_JSON = './asset/img/numbers.json';
 
 class GameStage extends BaseStage {
 
     constructor(renderer) {
         super(renderer)
-        this.resArray = [MJ_TILES_JSON, Constant.RES.BG_GAME];
+        this.resArray = [MJ_TILES_JSON, MJ_TIMER_NUMBERS_JSON, Constant.RES.BG_GAME];
         this.getTilesDown = this.getTilesDown.bind(this);
         this.updateTilesDown = this.updateTilesDown.bind(this);
         this.updateTilesRight = this.updateTilesRight.bind(this);
         this.updateTilesUp = this.updateTilesUp.bind(this);
         this.updateTilesLeft = this.updateTilesLeft.bind(this);
 
+        this.loadComponents(this);
         this.loadRes(this.resArray);
     }
 
@@ -97,6 +102,18 @@ class GameStage extends BaseStage {
                 }, {
                     "suit": 1,
                     "rank": 3
+                }, {
+                    "suit": 3,
+                    "rank": 4
+                }, {
+                    "suit": 2,
+                    "rank": 2
+                }, {
+                    "suit": 1,
+                    "rank": 3
+                }, {
+                    "suit": 3,
+                    "rank": 4
                 }, {
                     "suit": 3,
                     "rank": 4
@@ -242,6 +259,18 @@ class GameStage extends BaseStage {
                 }, {
                     "suit": 1,
                     "rank": 4
+                }, {
+                    "suit": 2,
+                    "rank": 2
+                }, {
+                    "suit": 1,
+                    "rank": 3
+                }, {
+                    "suit": 3,
+                    "rank": 4
+                }, {
+                    "suit": 2,
+                    "rank": 2
                 }],
                 "wallcards": [{
                     "suit": 1,
@@ -348,6 +377,18 @@ class GameStage extends BaseStage {
                 }, {
                     "suit": 3,
                     "rank": 4
+                }, {
+                    "suit": 2,
+                    "rank": 2
+                }, {
+                    "suit": 1,
+                    "rank": 3
+                }, {
+                    "suit": 3,
+                    "rank": 4
+                }, {
+                    "suit": 2,
+                    "rank": 2
                 }],
                 "meldcards": [{
                     "type": 1,
@@ -392,6 +433,18 @@ class GameStage extends BaseStage {
                 }, {
                     "suit": 2,
                     "rank": 9
+                }, {
+                    "suit": 2,
+                    "rank": 2
+                }, {
+                    "suit": 1,
+                    "rank": 3
+                }, {
+                    "suit": 3,
+                    "rank": 4
+                }, {
+                    "suit": 2,
+                    "rank": 2
                 }],
                 "meldcards": [{
                     "type": 1,
@@ -422,13 +475,24 @@ class GameStage extends BaseStage {
 
         this.mjTilesTextures = PIXI.loader.resources[MJ_TILES_JSON].textures
         this.updateScene();
-        this.show();
+    }
+
+    loadComponents() {
+        this.components.push(new GameTimer(this));
     }
 
     onMouseDown() {}
 
+    update(time) {
+        super.update(time);
+
+        this.removeChildren();
+        this.updateScene();
+    }
     updateScene() {
-        console.log(`win width:${this.winSize.width} height:${this.winSize.height}`);
+        if ('undefined' == typeof(this.winSize)) {
+            return
+        }
         let sp = Utils.createSprite(Constant.RES.BG_GAME);
         Utils.fillbg(sp, this.renderer)
         Utils.center(sp, this.renderer)
@@ -446,6 +510,8 @@ class GameStage extends BaseStage {
                 }
             }
         }
+
+        this.stage.addChild(this.updateTimer(sceneData.countDown));
     }
 
     getSuitableUpdateFunc(seatID, mySeatID) {
@@ -469,7 +535,7 @@ class GameStage extends BaseStage {
 
     updateTilesDown(tiles) {
         let x = this.winSize.width / 2;
-        let y = this.winSize.height / 2 + 100;
+        let y = this.winSize.height / 2 + 160;
 
         const c = new QueueArea();
         let area = this.updateDiscardAreaDown(tiles.discards);
@@ -477,12 +543,12 @@ class GameStage extends BaseStage {
             c.addChild(area);
             area.position.set(x, y);
         }
-        area = this.updateWallcardAreaDown(tiles.wallcards);
-        y += 100;
-        if (null != area) {
-            c.addChild(area);
-            area.position.set(x, y);
-        }
+        // area = this.updateWallcardAreaDown(tiles.wallcards);
+        // y += 100;
+        // if (null != area) {
+        //     c.addChild(area);
+        //     area.position.set(x, y);
+        // }
 
         area = new QueueArea();
         const meldArea = this.updateMeldcardAreaDown(tiles.meldcards);
@@ -495,12 +561,12 @@ class GameStage extends BaseStage {
             direction: 'down'
         });
         c.addChild(area);
-        y += 100;
+        y = this.winSize.height - 50;
         area.position.set(x, y);
         return c;
     }
     updateTilesRight(tiles) {
-        let x = this.winSize.width / 2 + 100;
+        let x = this.winSize.width / 2 + 160;
         let y = this.winSize.height / 2;
 
         const c = new QueueArea();
@@ -509,12 +575,12 @@ class GameStage extends BaseStage {
             c.addChild(area);
             area.position.set(x, y);
         }
-        area = this.updateWallcardAreaRight(tiles.wallcards);
-        x += 100;
-        if (null != area) {
-            c.addChild(area);
-            area.position.set(x, y);
-        }
+        // area = this.updateWallcardAreaRight(tiles.wallcards);
+        // x += 100;
+        // if (null != area) {
+        //     c.addChild(area);
+        //     area.position.set(x, y);
+        // }
 
         area = new QueueArea();
         const meldArea = this.updateMeldcardAreaRight(tiles.meldcards);
@@ -527,13 +593,13 @@ class GameStage extends BaseStage {
             direction: 'right'
         });
         c.addChild(area);
-        x += 100;
+        x = this.winSize.width - 50;
         area.position.set(x, y);
         return c;
     }
     updateTilesUp(tiles) {
         let x = this.winSize.width / 2;
-        let y = this.winSize.height / 2 - 100;
+        let y = this.winSize.height / 2 - 160;
 
         const c = new QueueArea();
         let area = this.updateDiscardAreaUp(tiles.discards);
@@ -541,12 +607,12 @@ class GameStage extends BaseStage {
             c.addChild(area);
             area.position.set(x, y);
         }
-        area = this.updateWallcardAreaUp(tiles.wallcards);
-        y -= 100;
-        if (null != area) {
-            c.addChild(area);
-            area.position.set(x, y);
-        }
+        // area = this.updateWallcardAreaUp(tiles.wallcards);
+        // y -= 100;
+        // if (null != area) {
+        //     c.addChild(area);
+        //     area.position.set(x, y);
+        // }
 
         area = new QueueArea();
         const meldArea = this.updateMeldcardAreaUp(tiles.meldcards);
@@ -559,13 +625,13 @@ class GameStage extends BaseStage {
             direction: 'up'
         });
         c.addChild(area);
-        y -= 100;
+        y = 50;
         area.position.set(x, y);
 
         return c;
     }
     updateTilesLeft(tiles) {
-        let x = this.winSize.width / 2 - 100;
+        let x = this.winSize.width / 2 - 160;
         let y = this.winSize.height / 2;
 
         const c = new QueueArea();
@@ -574,12 +640,12 @@ class GameStage extends BaseStage {
             c.addChild(area);
             area.position.set(x, y);
         }
-        area = this.updateWallcardAreaLeft(tiles.wallcards);
-        x -= 100;
-        if (null != area) {
-            c.addChild(area);
-            area.position.set(x, y);
-        }
+        // area = this.updateWallcardAreaLeft(tiles.wallcards);
+        // x -= 100;
+        // if (null != area) {
+        //     c.addChild(area);
+        //     area.position.set(x, y);
+        // }
 
         area = new QueueArea();
         const meldArea = this.updateMeldcardAreaLeft(tiles.meldcards);
@@ -592,7 +658,7 @@ class GameStage extends BaseStage {
             direction: 'left'
         });
         c.addChild(area);
-        x -= 100;
+        x = 50;
         area.position.set(x, y);
 
         return c;
@@ -632,7 +698,7 @@ class GameStage extends BaseStage {
         c.layout({
             intervalX: -7,
             intervalY: -36,
-            height: 300,
+            height: 200,
             direction: 'right'
         });
         return c;
@@ -670,7 +736,7 @@ class GameStage extends BaseStage {
         c.layout({
             intervalX: -7,
             intervalY: -36,
-            height: 300,
+            height: 200,
             direction: 'left'
         });
         return c;
@@ -966,6 +1032,31 @@ class GameStage extends BaseStage {
             intervalY: -36,
             direction: 'left'
         });
+        return c;
+    }
+
+    updateTimer(seconds) {
+        const c = new QueueArea();
+        const numbers = new Array();
+        while (seconds > 0) {
+            numbers.push(seconds % 10);
+            seconds = Math.floor(seconds / 10);
+        }
+        numbers.reverse();
+        if (0 == numbers.length) {
+            numbers.push(0);
+        }
+
+        const textures = PIXI.loader.resources[MJ_TIMER_NUMBERS_JSON].textures
+        numbers.forEach((n) => {
+            c.addChild(new PIXI.Sprite(textures[`number${n}`]));
+        })
+        c.layout({
+            intervalX: 0,
+            direction: 'down'
+        })
+        c.position.set(this.winSize.width / 2, this.winSize.height / 2);
+
         return c;
     }
 
