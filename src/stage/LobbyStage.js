@@ -55,9 +55,6 @@ class LobbyStage extends BaseStage {
         sp.position.set(winSize.width / 2, winSize.height - 100);
         this.stage.addChild(sp);
         this.btnEntry = sp;
-
-        //Render the stage
-        this.show();
     }
 
     onMouseDown(evt) {

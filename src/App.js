@@ -48,7 +48,7 @@ class App extends PIXI.Application {
         renderer.autoResize = true;
         renderer.resize(window.innerWidth, window.innerHeight);
 
-        this.pushStage(new GameStage(this.renderer));
+        this.pushStage(new LoginStage(this.renderer));
 
         this.ticker.add((time) => {
             this.stage.children.forEach((child) => {
@@ -62,7 +62,7 @@ class App extends PIXI.Application {
 
     pushStage(stage) {
         if (this.stage.children.length > 0) {
-            this.stage.children[-1].visible = false;
+            this.stage.children[this.stage.children.length - 1].visible = false;
         }
         this.stage.addChild(stage);
     }

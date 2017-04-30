@@ -17,6 +17,9 @@ import {
 import {
     Input
 } from '../component/Input'
+import {
+    Net
+} from '../service/Net'
 
 class LoginStage extends BaseStage {
 
@@ -30,6 +33,8 @@ class LoginStage extends BaseStage {
         ];
 
         this.loadRes(this.resArray);
+        Net.getInstance().onRegister.add(this.registerResp.bind(this));
+        Net.getInstance().onLogin.add(this.loginResp.bind(this));
     }
 
     onResLoadFinish() {
@@ -54,18 +59,46 @@ class LoginStage extends BaseStage {
         sp.position.set(winSize.width / 2, winSize.height - 100);
         this.stage.addChild(sp);
         this.btnLogin = sp;
-
-        //Render the stage
-        this.show();
     }
 
     onMouseDown(evt) {
         if (!Utils.touchInSprite(evt.position, this.btnLogin)) {
-            return false
+            return;
         }
 
-        const lobby = new LobbyStage(this.renderer);
-        App.getInstance().show(lobby);
+        const account = Utils.getCookie('userName');
+        const password = Utils.getCookie('password');
+        console.log('Account:' + account + ' Password:' + password);
+        if (!account || !password) {
+            this.registerReq();
+            return;
+        }
+
+        this.loginReq(account, password);
+    }
+
+    registerReq() {
+        console.log('to register');
+        Net.getInstance().register();
+    }
+
+    registerResp(resp) {
+        console.log('register resp:%O', resp);
+        Utils.setCookie('userName', resp.userName);
+        Utils.setCookie('password', resp.password);
+    }
+
+    loginReq(account, password) {
+        Net.getInstance().login(account, password);
+    }
+
+    loginResp(resp) {
+        if (0 == resp.error) {
+            const lobby = new LobbyStage(this.renderer);
+            App.getInstance().pushStage(lobby);
+        } else {
+            console.log('login fail:' + resp.description)
+        }
     }
 
 }
