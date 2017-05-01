@@ -481,7 +481,11 @@ class GameStage extends BaseStage {
         this.components.push(new GameTimer(this));
     }
 
-    onMouseDown() {}
+    onMouseDown() {
+        if (!this.visible) {
+            return true;
+        }
+    }
 
     update(time) {
         super.update(time);

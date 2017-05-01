@@ -62,6 +62,10 @@ class LoginStage extends BaseStage {
     }
 
     onMouseDown(evt) {
+        if (!this.visible) {
+            return true;
+        }
+
         if (!Utils.touchInSprite(evt.position, this.btnLogin)) {
             return;
         }

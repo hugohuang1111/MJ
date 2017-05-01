@@ -53,21 +53,32 @@ class Utils {
     }
 
     static getRect(sp) {
+        let startPoint = sp.toGlobal(new PIXI.Point(0, 0));
         return {
-            x: sp.position.x - sp.anchor.x * sp.width,
-            y: sp.position.y - sp.anchor.y * sp.height,
+            x: startPoint.x - sp.anchor.x * sp.width,
+            y: startPoint.y - sp.anchor.y * sp.height,
             width: sp.width,
             height: sp.height
         }
     }
 
     static touchInSprite(position, sp) {
+        if (!sp) {
+            return false;
+        }
         const r = Utils.getRect(sp)
         if (position.x > r.x && position.x < (r.x + r.width) && position.y > r.y && position.y < (r.y + r.height)) {
             return true;
         } else {
             return false;
         }
+    }
+
+    static cloneSprite(sp) {
+        if (!sp) {
+            return;
+        }
+        return new PIXI.Sprite(sp.texture.clone());
     }
 }
 
