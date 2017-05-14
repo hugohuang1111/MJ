@@ -13,5 +13,7 @@ class Sprite {
 
     position(x, y) {
         this.sprite.position.set(x, y)
+
+        return this
     }
 }

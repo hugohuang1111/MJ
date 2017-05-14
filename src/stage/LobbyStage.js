@@ -17,6 +17,9 @@ import {
 import {
     Input
 } from '../component/Input'
+import {
+    Net
+} from '../service/Net'
 
 const MJ_TIMER_NUMBERS_JSON = './asset/img/numbers.json';
 
@@ -32,7 +35,7 @@ class LobbyStage extends BaseStage {
         ];
 
         this.loadRes(this.resArray);
-
+        Net.getInstance().onRoom.add(this.roomListener.bind(this));
     }
 
     onResLoadFinish() {
@@ -104,6 +107,20 @@ class LobbyStage extends BaseStage {
         this.inputDigits.addChild(digit);
     }
 
+    roomListener(msg) {
+        if (!this.visible) {
+            return true;
+        }
+        if ('entryRoom' == msg.type) {
+            if (0 == msg.error) {
+                const stage = new GameStage(this.renderer);
+                App.getInstance().pushStage(stage);
+            } else {
+                console.log(msg.description);
+            }
+        }
+    }
+
     onMouseDown(evt) {
         if (!this.visible) {
             return true;
@@ -117,8 +134,7 @@ class LobbyStage extends BaseStage {
                 roomNumber += child.digit;
             });
             console.log(`entry room:%d`, roomNumber);
-            // const stage = new GameStage(this.renderer);
-            // App.getInstance().show(stage);
+            Net.getInstance().entryRoom(roomNumber);
         } else {
             let i = 1;
             this.numbersSP.children.forEach((child) => {

@@ -17,6 +17,7 @@ class Net {
     constructor() {
         this.onRegister = new Signal();
         this.onLogin = new Signal();
+        this.onRoom = new Signal();
         this.ws = new WebSocket('ws://localhost:8000')
         this.ws.onopen = this.onOpen.bind(this);
         this.ws.onclose = this.onClose.bind(this);
@@ -50,6 +51,9 @@ class Net {
             case "login":
                 this.onLogin.dispatch(msg);
                 break;
+            case "entryRoom":
+                this.onRoom.dispatch(msg);
+                break;
         }
     }
 
@@ -74,6 +78,15 @@ class Net {
             type: 'login',
             userName: name,
             password: password
+        };
+        this.sendMsg(req);
+    }
+
+    entryRoom(roomid) {
+        const req = {
+            version: 1,
+            type: 'entryRoom',
+            roomID: roomid
         };
         this.sendMsg(req);
     }

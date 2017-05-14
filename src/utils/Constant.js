@@ -7,6 +7,8 @@ const Constant = {
         BTN_START: './asset/img/btnstart.png',
         BTN_CREATE: './asset/img/btnCreate.png',
         BTN_ENTRY: './asset/img/btnEntry.png',
+        USER_HEADER_DEFAULT: './asset/img/userHeaderDefault.png',
+        USER_HEADER_BG: './asset/img/userHeaderBg.png',
         TILE_DOWN_H_1B: 'down/down_h_1b.png',
         TILE_DOWN_H_1T: 'down/down_h_1t.png',
         TILE_DOWN_H_1W: 'down/down_h_1w.png',

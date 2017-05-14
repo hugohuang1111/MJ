@@ -33,7 +33,13 @@ class GameStage extends BaseStage {
 
     constructor(renderer) {
         super(renderer)
-        this.resArray = [MJ_TILES_JSON, MJ_TIMER_NUMBERS_JSON, Constant.RES.BG_GAME];
+        this.resArray = [
+            MJ_TILES_JSON,
+            MJ_TIMER_NUMBERS_JSON,
+            Constant.RES.BG_GAME,
+            Constant.RES.USER_HEADER_DEFAULT,
+            Constant.RES.USER_HEADER_BG
+        ];
         this.getTilesDown = this.getTilesDown.bind(this);
         this.updateTilesDown = this.updateTilesDown.bind(this);
         this.updateTilesRight = this.updateTilesRight.bind(this);
@@ -1062,6 +1068,19 @@ class GameStage extends BaseStage {
         c.position.set(this.winSize.width / 2, this.winSize.height / 2);
 
         return c;
+    }
+
+    updateUserHeader() {
+        const n = new PIXI.Container();
+        const bg = new PIXI.Sprite(
+            this.mjTilesTextures[Constant.RES.USER_HEADER_BG]
+        );
+        const header = new PIXI.Sprite(
+            this.mjTilesTextures[Constant.RES.USER_HEADER_DEFAULT]
+        );
+        n.addChild(bg);
+        n.addChild(header);
+
     }
 
 
