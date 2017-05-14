@@ -113,8 +113,10 @@ class LobbyStage extends BaseStage {
         }
         if ('entryRoom' == msg.type) {
             if (0 == msg.error) {
+                const app = App.getInstance();
                 const stage = new GameStage(this.renderer);
-                App.getInstance().pushStage(stage);
+                stage.setPlayer(app.curUser.userID, msg.users);
+                app.pushStage(stage);
             } else {
                 console.log(msg.description);
             }

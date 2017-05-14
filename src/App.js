@@ -8,6 +8,9 @@ import {
 import {
     Input
 } from './component/Input';
+import {
+    UserInfo
+} from './component/UserInfo';
 
 let gInstance = null;
 
@@ -95,6 +98,13 @@ class App extends PIXI.Application {
     onMouseUp(evt) {
         --this.mouseDown[evt.button];
         --this.mouseDownCount;
+    }
+
+    getOrCreateCurUser() {
+        if ('undefined' == type this.curUser) {
+            this.curUser = new UserInfo();
+        }
+        return this.curUser;
     }
 
 }

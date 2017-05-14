@@ -476,11 +476,30 @@ class GameStage extends BaseStage {
                     "rank": 2
                 }]
             }],
+            "players": [{
+                "playerID": 1,
+                "nickName": "User1"
+            }, {
+                "playerID": 2,
+                "nickName": "User2"
+            }],
+            "seatTable": [
+                1,
+                2,
+                3,
+                4
+            ]
             "countDown": 23
         };
 
         this.mjTilesTextures = PIXI.loader.resources[MJ_TILES_JSON].textures
         this.updateScene();
+    }
+
+    setPlayer(pid, seatTables) {
+        console.log('HHH %d, %O', pid, seatTables);
+        this.playerID = pid;
+        this.sceneData.seatTable = seatTables;
     }
 
     loadComponents() {
@@ -510,7 +529,7 @@ class GameStage extends BaseStage {
 
         this.setMySeatID();
         const sceneData = this.sceneData;
-        for (var i = 0; i < sceneData.tiles.length; i++) {
+        for (let i = 0; i < sceneData.tiles.length; i++) {
             const tiles = sceneData.tiles[i];
             const updateFunc = this.getSuitableUpdateFunc(tiles.seatID, this.seatID)
             if (updateFunc) {
@@ -521,7 +540,28 @@ class GameStage extends BaseStage {
             }
         }
 
+        //user header
+        const seatTable = this.sceneData.seatTable;
+        for (let seatID = 0; seatID < seatTable.length; seatID++) {
+            const v = (seatID + 4 - this.seatID) % 4;
+            const pid = seatTable[i];
+            this.createUserHeader();
+            if (0 == v) {
+                //down
+            } else if (1 == v) {
+                //right
+            } else if (2 == v) {
+                //up
+            } else if (3 == v) {
+                //left
+            }
+        }
+
         this.stage.addChild(this.updateTimer(sceneData.countDown));
+    }
+
+    createUserHeader(name) {
+
     }
 
     getSuitableUpdateFunc(seatID, mySeatID) {
@@ -1340,10 +1380,11 @@ class GameStage extends BaseStage {
 
     setMySeatID() {
         const tiles = this.sceneData.tiles;
+        const curPlayerID = App.getInstance().getOrCreateCurUser();
 
         for (var i = 0; i < tiles.length; i++) {
             const t = tiles[i];
-            if (t.playerID == this.playerID) {
+            if (t.playerID == curPlayerID) {
                 this.seatID = t.playerID;
             }
         }
