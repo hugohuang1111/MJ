@@ -99,7 +99,7 @@ class LoginStage extends BaseStage {
     loginResp(resp) {
         if (0 == resp.error) {
             const app = App.getInstance();
-            user = app.getOrCreateCurUser();
+            const user = app.getOrCreateCurUser();
             user.setName(resp.userName);
             user.setID(resp.userID);
             const lobby = new LobbyStage(this.renderer);

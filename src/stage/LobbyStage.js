@@ -16,10 +16,10 @@ import {
 } from './GameStage';
 import {
     Input
-} from '../component/Input'
+} from '../component/Input';
 import {
     Net
-} from '../service/Net'
+} from '../service/Net';
 
 const MJ_TIMER_NUMBERS_JSON = './asset/img/numbers.json';
 
@@ -115,7 +115,7 @@ class LobbyStage extends BaseStage {
             if (0 == msg.error) {
                 const app = App.getInstance();
                 const stage = new GameStage(this.renderer);
-                stage.setPlayer(app.curUser.userID, msg.users);
+                //stage.setPlayer(app.curUser.id, msg.users);
                 app.pushStage(stage);
             } else {
                 console.log(msg.description);

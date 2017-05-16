@@ -18,6 +18,7 @@ class Net {
         this.onRegister = new Signal();
         this.onLogin = new Signal();
         this.onRoom = new Signal();
+        this.roomSig = new Signal();
         this.ws = new WebSocket('ws://localhost:8000')
         this.ws.onopen = this.onOpen.bind(this);
         this.ws.onclose = this.onClose.bind(this);
@@ -44,7 +45,8 @@ class Net {
         console.log('ws message:%O', event);
         const msg = JSON.parse(event.data);
 
-        switch (msg.type) {
+        const cmds = msg.type.split(':');
+        switch (cmds[0]) {
             case "register":
                 this.onRegister.dispatch(msg);
                 break;
@@ -53,6 +55,9 @@ class Net {
                 break;
             case "entryRoom":
                 this.onRoom.dispatch(msg);
+                break;
+            case "room":
+                this.roomSig.dispatch(msg);
                 break;
         }
     }

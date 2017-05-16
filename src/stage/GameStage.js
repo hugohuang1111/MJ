@@ -25,6 +25,12 @@ import {
 import {
     GameTimer
 } from '../component/GameTimer';
+import {
+    App
+} from '../App';
+import {
+    Net
+} from '../service/Net';
 
 const MJ_TILES_JSON = './asset/img/mjtiles.json';
 const MJ_TIMER_NUMBERS_JSON = './asset/img/numbers.json';
@@ -45,6 +51,7 @@ class GameStage extends BaseStage {
         this.updateTilesRight = this.updateTilesRight.bind(this);
         this.updateTilesUp = this.updateTilesUp.bind(this);
         this.updateTilesLeft = this.updateTilesLeft.bind(this);
+        Net.getInstance().roomSig.add(this.onRoomEvent.bind(this));
 
         this.loadComponents(this);
         this.loadRes(this.resArray);
@@ -488,7 +495,7 @@ class GameStage extends BaseStage {
                 2,
                 3,
                 4
-            ]
+            ],
             "countDown": 23
         };
 
@@ -497,8 +504,10 @@ class GameStage extends BaseStage {
     }
 
     setPlayer(pid, seatTables) {
-        console.log('HHH %d, %O', pid, seatTables);
         this.playerID = pid;
+        if ('undefined' == typeof this.sceneData) {
+            this.sceneData = {};
+        }
         this.sceneData.seatTable = seatTables;
     }
 
@@ -522,6 +531,7 @@ class GameStage extends BaseStage {
         if ('undefined' == typeof(this.winSize)) {
             return
         }
+        const winSize = this.winSize;
         let sp = Utils.createSprite(Constant.RES.BG_GAME);
         Utils.fillbg(sp, this.renderer)
         Utils.center(sp, this.renderer)
@@ -544,16 +554,27 @@ class GameStage extends BaseStage {
         const seatTable = this.sceneData.seatTable;
         for (let seatID = 0; seatID < seatTable.length; seatID++) {
             const v = (seatID + 4 - this.seatID) % 4;
-            const pid = seatTable[i];
-            this.createUserHeader();
+            const pid = seatTable[seatID];
+
+            const header = new PIXI.Container();
+            const bg = Utils.createSprite(Constant.RES.USER_HEADER_BG);
+            const icon = Utils.createSprite(Constant.RES.USER_HEADER_DEFAULT);
+            header.addChild(bg);
+            header.addChild(icon);
+
+            this.stage.addChild(header);
             if (0 == v) {
-                //down
+                header.position.set(50, winSize.height - 50);
+                icon.rotation = 0;
             } else if (1 == v) {
-                //right
+                header.position.set(winSize.width - 50, winSize.height - 50);
+                icon.rotation = -Math.PI / 2;
             } else if (2 == v) {
-                //up
+                header.position.set(winSize.width - 50, 50);
+                icon.rotation = Math.PI;
             } else if (3 == v) {
-                //left
+                header.position.set(50, 50);
+                icon.rotation = Math.PI / 2;
             }
         }
 
@@ -561,7 +582,14 @@ class GameStage extends BaseStage {
     }
 
     createUserHeader(name) {
+        const c = new PIXI.Container();
+        const bg = Utils.createSprite(Constant.RES.USER_HEADER_BG);
+        const icon = Utils.createSprite(Constant.RES.USER_HEADER_DEFAULT);
 
+        c.addChild(bg);
+        c.addChild(icon);
+
+        return c;
     }
 
     getSuitableUpdateFunc(seatID, mySeatID) {
@@ -1379,14 +1407,21 @@ class GameStage extends BaseStage {
 
 
     setMySeatID() {
-        const tiles = this.sceneData.tiles;
-        const curPlayerID = App.getInstance().getOrCreateCurUser();
+        const seatTable = this.sceneData.seatTable;
+        const curPlayerID = App.getInstance().getOrCreateCurUser().id;
 
-        for (var i = 0; i < tiles.length; i++) {
-            const t = tiles[i];
-            if (t.playerID == curPlayerID) {
-                this.seatID = t.playerID;
+        let seatDown = false;
+        for (var i = 0; i < seatTable.length; i++) {
+            const t = seatTable[i];
+            if (t == curPlayerID) {
+                this.seatID = t;
+                seatDown = true;
+                break;
             }
+        }
+
+        if (!seatDown) {
+            console.log('ERROR, user not sit down');
         }
     }
 
@@ -1422,6 +1457,31 @@ class GameStage extends BaseStage {
     getSeatDirection(seatID) {
         const i = (seatID + 4 - this.seatID) % 4;
         return i;
+    }
+
+    onRoomEvent(resp) {
+        const cmds = resp.type.split(':');
+        switch (cmds[0]) {
+            case 'room':
+                {
+                    switch (cmds[1]) {
+                        case 'users':
+                            {
+                                this.sceneData.seatTable = resp.users;
+                                break;
+                            }
+                        default:
+                            {
+                                break;
+                            }
+                    }
+                    break;
+                }
+            default:
+                {
+                    break;
+                }
+        }
     }
 
 }

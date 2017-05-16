@@ -101,7 +101,7 @@ class App extends PIXI.Application {
     }
 
     getOrCreateCurUser() {
-        if ('undefined' == type this.curUser) {
+        if ('undefined' == typeof this.curUser) {
             this.curUser = new UserInfo();
         }
         return this.curUser;
