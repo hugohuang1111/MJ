@@ -61,6 +61,7 @@ class GameStage extends BaseStage {
         super.onResLoadFinish();
 
         this.playerID = 0;
+        /*
         this.sceneData = {
             "tiles": [{
                 "playerID": 0,
@@ -498,6 +499,7 @@ class GameStage extends BaseStage {
             ],
             "countDown": 23
         };
+        */
 
         this.mjTilesTextures = PIXI.loader.resources[MJ_TILES_JSON].textures
         this.updateScene();
@@ -532,23 +534,16 @@ class GameStage extends BaseStage {
             return
         }
         const winSize = this.winSize;
+
+        // background
         let sp = Utils.createSprite(Constant.RES.BG_GAME);
         Utils.fillbg(sp, this.renderer)
         Utils.center(sp, this.renderer)
         this.stage.addChild(sp);
-
-        this.setMySeatID();
-        const sceneData = this.sceneData;
-        for (let i = 0; i < sceneData.tiles.length; i++) {
-            const tiles = sceneData.tiles[i];
-            const updateFunc = this.getSuitableUpdateFunc(tiles.seatID, this.seatID)
-            if (updateFunc) {
-                const container = updateFunc(tiles)
-                if (container) {
-                    this.stage.addChild(container);
-                }
-            }
+        if ('undefined' == typeof(this.sceneData.phase)) {
+            return
         }
+        this.setMySeatID();
 
         //user header
         const seatTable = this.sceneData.seatTable;
@@ -575,6 +570,18 @@ class GameStage extends BaseStage {
             } else if (3 == v) {
                 header.position.set(50, 50);
                 icon.rotation = Math.PI / 2;
+            }
+        }
+
+        const sceneData = this.sceneData;
+        for (let i = 0; i < sceneData.tiles.length; i++) {
+            const tiles = sceneData.tiles[i];
+            const updateFunc = this.getSuitableUpdateFunc(tiles.seatID, this.seatID)
+            if (updateFunc) {
+                const container = updateFunc(tiles)
+                if (container) {
+                    this.stage.addChild(container);
+                }
             }
         }
 
@@ -1467,6 +1474,9 @@ class GameStage extends BaseStage {
                     switch (cmds[1]) {
                         case 'users':
                             {
+                                if ('undefined' == typeof this.sceneData) {
+                                    this.sceneData = {};
+                                }
                                 this.sceneData.seatTable = resp.users;
                                 break;
                             }
