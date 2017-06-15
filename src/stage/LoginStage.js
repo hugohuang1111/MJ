@@ -88,8 +88,12 @@ class LoginStage extends BaseStage {
 
     registerResp(resp) {
         console.log('register resp:%O', resp);
-        Utils.setCookie('userName', resp.userName);
-        Utils.setCookie('password', resp.password);
+        if (0 != resp.error) {
+            console.log('register failed:', resp.description);
+            return
+        }
+        Utils.setCookie('userName', resp.user);
+        Utils.setCookie('password', resp.passwd);
     }
 
     loginReq(account, password) {
@@ -100,7 +104,7 @@ class LoginStage extends BaseStage {
         if (0 == resp.error) {
             const app = App.getInstance();
             const user = app.getOrCreateCurUser();
-            user.setName(resp.userName);
+            user.setName(resp.user);
             user.setID(resp.userID);
             const lobby = new LobbyStage(this.renderer);
             app.pushStage(lobby);

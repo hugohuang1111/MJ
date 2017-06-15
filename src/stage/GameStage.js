@@ -51,7 +51,7 @@ class GameStage extends BaseStage {
         this.updateTilesRight = this.updateTilesRight.bind(this);
         this.updateTilesUp = this.updateTilesUp.bind(this);
         this.updateTilesLeft = this.updateTilesLeft.bind(this);
-        Net.getInstance().roomSig.add(this.onRoomEvent.bind(this));
+        Net.getInstance().onRoom.add(this.onRoomEvent.bind(this));
 
         this.loadComponents(this);
         this.loadRes(this.resArray);
@@ -546,10 +546,13 @@ class GameStage extends BaseStage {
         this.setMySeatID();
 
         //user header
-        const seatTable = this.sceneData.seatTable;
-        for (let seatID = 0; seatID < seatTable.length; seatID++) {
+        const users = this.sceneData.users;
+        for (let seatID = 0; seatID < users.length; seatID++) {
             const v = (seatID + 4 - this.seatID) % 4;
-            const pid = seatTable[seatID];
+            const pid = users[seatID];
+            if (0 == pid) {
+                continue;
+            }
 
             const header = new PIXI.Container();
             const bg = Utils.createSprite(Constant.RES.USER_HEADER_BG);
@@ -574,16 +577,45 @@ class GameStage extends BaseStage {
         }
 
         const sceneData = this.sceneData;
-        for (let i = 0; i < sceneData.tiles.length; i++) {
-            const tiles = sceneData.tiles[i];
-            const updateFunc = this.getSuitableUpdateFunc(tiles.seatID, this.seatID)
-            if (updateFunc) {
-                const container = updateFunc(tiles)
-                if (container) {
-                    this.stage.addChild(container);
+        switch (sceneData.phase) {
+            case 0: // waiting
+                {
+                    break;
                 }
-            }
+            case 1: // shuffle
+                {
+                    break;
+                }
+            case 2: // dealing
+                {
+                    break;
+                }
+            case 3: // playing
+                {
+                    const tiles = sceneData.tiles;
+                    for (let i = 0; i < 4; i++) {
+                        const updateFunc = this.getSuitableUpdateFunc(i, this.seatID)
+                        if (updateFunc) {
+                            const container = updateFunc(tiles, i);
+                            if (container) {
+                                this.stage.addChild(container);
+                            }
+                        }
+                    }
+                    break;
+                }
+            case 4: // settle
+                {
+                    break;
+                }
+            default:
+                {
+                    console.log('GameStage unknow scene phase');
+                    break;
+                }
         }
+
+
 
         this.stage.addChild(this.updateTimer(sceneData.countDown));
     }
@@ -618,12 +650,12 @@ class GameStage extends BaseStage {
         return f;
     }
 
-    updateTilesDown(tiles) {
+    updateTilesDown(tiles, i) {
         let x = this.winSize.width / 2;
         let y = this.winSize.height / 2 + 160;
 
         const c = new QueueArea();
-        let area = this.updateDiscardAreaDown(tiles.discards);
+        let area = this.updateDiscardAreaDown(tiles.discardTiles[i]);
         if (null != area) {
             c.addChild(area);
             area.position.set(x, y);
@@ -636,11 +668,11 @@ class GameStage extends BaseStage {
         // }
 
         area = new QueueArea();
-        const meldArea = this.updateMeldcardAreaDown(tiles.meldcards);
+        const meldArea = this.updateMeldcardAreaDown(tiles.meldTiles[i]);
         if (null != meldArea) {
             area.addChild(meldArea);
         }
-        area.addChild(this.updateHoldcardAreaDown(tiles.holdcards));
+        area.addChild(this.updateHoldcardAreaDown(tiles.meldTiles[i]));
         area.layout({
             intervalX: 40,
             direction: 'down'
@@ -650,12 +682,12 @@ class GameStage extends BaseStage {
         area.position.set(x, y);
         return c;
     }
-    updateTilesRight(tiles) {
+    updateTilesRight(tiles, i) {
         let x = this.winSize.width / 2 + 160;
         let y = this.winSize.height / 2;
 
         const c = new QueueArea();
-        let area = this.updateDiscardAreaRight(tiles.discards);
+        let area = this.updateDiscardAreaRight(tiles.discardTiles[i]);
         if (null != area) {
             c.addChild(area);
             area.position.set(x, y);
@@ -668,11 +700,11 @@ class GameStage extends BaseStage {
         // }
 
         area = new QueueArea();
-        const meldArea = this.updateMeldcardAreaRight(tiles.meldcards);
+        const meldArea = this.updateMeldcardAreaRight(tiles.meldTiles[i]);
         if (null != meldArea) {
             area.addChild(meldArea);
         }
-        area.addChild(this.updateHoldcardAreaRight(tiles.holdcards));
+        area.addChild(this.updateHoldcardAreaRight(tiles.meldTiles[i]));
         area.layout({
             intervalY: 40,
             direction: 'right'
@@ -682,12 +714,12 @@ class GameStage extends BaseStage {
         area.position.set(x, y);
         return c;
     }
-    updateTilesUp(tiles) {
+    updateTilesUp(tiles, i) {
         let x = this.winSize.width / 2;
         let y = this.winSize.height / 2 - 160;
 
         const c = new QueueArea();
-        let area = this.updateDiscardAreaUp(tiles.discards);
+        let area = this.updateDiscardAreaUp(tiles.discardTiles[i]);
         if (null != area) {
             c.addChild(area);
             area.position.set(x, y);
@@ -700,11 +732,11 @@ class GameStage extends BaseStage {
         // }
 
         area = new QueueArea();
-        const meldArea = this.updateMeldcardAreaUp(tiles.meldcards);
+        const meldArea = this.updateMeldcardAreaUp(tiles.meldTiles[i]);
         if (null != meldArea) {
             area.addChild(meldArea);
         }
-        area.addChild(this.updateHoldcardAreaUp(tiles.holdcards));
+        area.addChild(this.updateHoldcardAreaUp(tiles.meldTiles[i]));
         area.layout({
             intervalX: 40,
             direction: 'up'
@@ -715,12 +747,12 @@ class GameStage extends BaseStage {
 
         return c;
     }
-    updateTilesLeft(tiles) {
+    updateTilesLeft(tiles, i) {
         let x = this.winSize.width / 2 - 160;
         let y = this.winSize.height / 2;
 
         const c = new QueueArea();
-        let area = this.updateDiscardAreaLeft(tiles.discards);
+        let area = this.updateDiscardAreaLeft(tiles.discardTiles[i]);
         if (null != area) {
             c.addChild(area);
             area.position.set(x, y);
@@ -733,11 +765,11 @@ class GameStage extends BaseStage {
         // }
 
         area = new QueueArea();
-        const meldArea = this.updateMeldcardAreaLeft(tiles.meldcards);
+        const meldArea = this.updateMeldcardAreaLeft(tiles.meldTiles[i]);
         if (null != meldArea) {
             area.addChild(meldArea);
         }
-        area.addChild(this.updateHoldcardAreaLeft(tiles.holdcards));
+        area.addChild(this.updateHoldcardAreaLeft(tiles.meldTiles[i]));
         area.layout({
             intervalY: 40,
             direction: 'left'
@@ -1414,14 +1446,13 @@ class GameStage extends BaseStage {
 
 
     setMySeatID() {
-        const seatTable = this.sceneData.seatTable;
+        const seatTable = this.sceneData.users;
         const curPlayerID = App.getInstance().getOrCreateCurUser().id;
 
         let seatDown = false;
         for (var i = 0; i < seatTable.length; i++) {
-            const t = seatTable[i];
-            if (t == curPlayerID) {
-                this.seatID = t;
+            if (seatTable[i] == curPlayerID) {
+                this.seatID = i;
                 seatDown = true;
                 break;
             }
@@ -1480,8 +1511,14 @@ class GameStage extends BaseStage {
                                 this.sceneData.seatTable = resp.users;
                                 break;
                             }
+                        case 'scene':
+                            {
+                                this.sceneData = resp
+                                break;
+                            }
                         default:
                             {
+                                console.log('GameStage unknow cmd:' + cmds[1]);
                                 break;
                             }
                     }

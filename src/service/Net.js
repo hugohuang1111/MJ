@@ -47,18 +47,49 @@ class Net {
 
         const cmds = msg.type.split(':');
         switch (cmds[0]) {
-            case "register":
-                this.onRegister.dispatch(msg);
-                break;
-            case "login":
-                this.onLogin.dispatch(msg);
-                break;
-            case "entryRoom":
-                this.onRoom.dispatch(msg);
-                break;
+            case "user":
+                {
+                    switch (cmds[1]) {
+                        case "register":
+                            {
+                                this.onRegister.dispatch(msg);
+                                break;
+                            }
+                        case "login":
+                            {
+                                this.onLogin.dispatch(msg);
+                                break;
+                            }
+                        default:
+                            {
+                                console.log("user module unknow cmd:%s", cmds[1]);
+                                break;
+                            }
+                    }
+                    break;
+                }
             case "room":
-                this.roomSig.dispatch(msg);
-                break;
+                {
+                    switch (cmds[1]) {
+                        case "scene":
+                        case "entry":
+                            {
+                                this.onRoom.dispatch(msg);
+                                break;
+                            }
+                        default:
+                            {
+                                console.log("room module unknow cmd:%s", cmds[1]);
+                                break;
+                            }
+                    }
+                    break;
+                }
+            default:
+                {
+                    console.log("unknow module:%s", cmds[0]);
+                    break;
+                }
         }
     }
 
@@ -70,7 +101,7 @@ class Net {
     register(name, password) {
         const req = {
             version: 1,
-            type: 'register',
+            type: 'user:register',
             userName: name,
             password: password
         };
@@ -80,8 +111,8 @@ class Net {
     login(name, password) {
         const req = {
             version: 1,
-            type: 'login',
-            userName: name,
+            type: 'user:login',
+            name: name,
             password: password
         };
         this.sendMsg(req);
@@ -90,7 +121,7 @@ class Net {
     entryRoom(roomid) {
         const req = {
             version: 1,
-            type: 'entryRoom',
+            type: 'room:entry',
             roomID: roomid
         };
         this.sendMsg(req);

@@ -111,15 +111,17 @@ class LobbyStage extends BaseStage {
         if (!this.visible) {
             return true;
         }
-        if ('entryRoom' == msg.type) {
-            if (0 == msg.error) {
-                const app = App.getInstance();
-                const stage = new GameStage(this.renderer);
-                //stage.setPlayer(app.curUser.id, msg.users);
-                app.pushStage(stage);
-            } else {
-                console.log(msg.description);
-            }
+        if (0 != msg.error) {
+            console.log(msg.description);
+            return;
+        }
+        if ('room:entry' == msg.type) {
+            const app = App.getInstance();
+            const stage = new GameStage(this.renderer);
+            //stage.setPlayer(app.curUser.id, msg.users);
+            app.pushStage(stage);
+        } else {
+            console.log('unknow msg type:%s', msg.type);
         }
     }
 
