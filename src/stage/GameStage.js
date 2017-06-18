@@ -44,7 +44,10 @@ class GameStage extends BaseStage {
             MJ_TIMER_NUMBERS_JSON,
             Constant.RES.BG_GAME,
             Constant.RES.USER_HEADER_DEFAULT,
-            Constant.RES.USER_HEADER_BG
+            Constant.RES.USER_HEADER_BG,
+            Constant.RES.SUIT_DOT,
+            Constant.RES.SUIT_BAMBOO,
+            Constant.RES.SUIT_CHARACTER
         ];
         this.getTilesDown = this.getTilesDown.bind(this);
         this.updateTilesDown = this.updateTilesDown.bind(this);
@@ -578,19 +581,38 @@ class GameStage extends BaseStage {
 
         const sceneData = this.sceneData;
         switch (sceneData.phase) {
-            case 0: // waiting
+            case GameStage.Phase.roomPhaseWaiting: // waiting
                 {
                     break;
                 }
-            case 1: // shuffle
+            case GameStage.Phase.roomPhaseShuffle: // shuffle
                 {
                     break;
                 }
-            case 2: // dealing
+            case GameStage.Phase.roomPhaseDealing: // dealing
                 {
                     break;
                 }
-            case 3: // playing
+            case GameStage.Phase.roomPhaseMakeAAbandon: // dealing
+                {
+                    const tag = 'selectableSuits';
+                    let suits = null;
+                    this.stage.children.forEach((child) => {
+                        if (tag == child.tag) {
+                            suits = child;
+                        }
+                    });
+                    if (null == suits) {
+                        suits = this.createSuits()
+                        suits.position.set(winSize.width / 2, winSize.height - 200);
+                        suits.tag = 'selectableSuits';
+                        this.stage.addChild(suits);
+                    } else {
+                        suits.visible = true;
+                    }
+                    break;
+                }
+            case GameStage.Phase.roomPhasePlaying: // playing
                 {
                     const tiles = sceneData.tiles;
                     for (let i = 0; i < 4; i++) {
@@ -604,7 +626,7 @@ class GameStage extends BaseStage {
                     }
                     break;
                 }
-            case 4: // settle
+            case GameStage.Phase.roomPhaseSettle: // settle
                 {
                     break;
                 }
@@ -615,9 +637,27 @@ class GameStage extends BaseStage {
                 }
         }
 
-
-
         this.stage.addChild(this.updateTimer(sceneData.countDown));
+    }
+
+    createSuits() {
+        const c = new PIXI.Container();
+        const dot = Utils.createSprite(Constant.RES.SUIT_DOT);
+        const bamboo = Utils.createSprite(Constant.RES.SUIT_BAMBOO);
+        const character = Utils.createSprite(Constant.RES.SUIT_CHARACTER);
+
+        dot.tag = GameStage.CardSuitType.SUIT_DOT;
+        bamboo.tag = GameStage.CardSuitType.SUIT_BAMBOO;
+        character.tag = GameStage.CardSuitType.SUIT_CHARACTER;
+
+        dot.position.set(-100, 0);
+        character.position.set(100, 0);
+
+        c.addChild(dot);
+        c.addChild(bamboo);
+        c.addChild(character);
+
+        return c;
     }
 
     createUserHeader(name) {
@@ -660,19 +700,19 @@ class GameStage extends BaseStage {
             c.addChild(area);
             area.position.set(x, y);
         }
-        // area = this.updateWallcardAreaDown(tiles.wallcards);
-        // y += 100;
-        // if (null != area) {
-        //     c.addChild(area);
-        //     area.position.set(x, y);
-        // }
+        area = this.updateWallcardAreaDown(tiles.wallTiles[i]);
+        y += 100;
+        if (null != area) {
+            c.addChild(area);
+            area.position.set(x, y);
+        }
 
         area = new QueueArea();
         const meldArea = this.updateMeldcardAreaDown(tiles.meldTiles[i]);
         if (null != meldArea) {
             area.addChild(meldArea);
         }
-        area.addChild(this.updateHoldcardAreaDown(tiles.meldTiles[i]));
+        area.addChild(this.updateHoldcardAreaDown(tiles.holdTiles[i]));
         area.layout({
             intervalX: 40,
             direction: 'down'
@@ -692,19 +732,19 @@ class GameStage extends BaseStage {
             c.addChild(area);
             area.position.set(x, y);
         }
-        // area = this.updateWallcardAreaRight(tiles.wallcards);
-        // x += 100;
-        // if (null != area) {
-        //     c.addChild(area);
-        //     area.position.set(x, y);
-        // }
+        area = this.updateWallcardAreaRight(tiles.wallTiles[i]);
+        x += 100;
+        if (null != area) {
+            c.addChild(area);
+            area.position.set(x, y);
+        }
 
         area = new QueueArea();
         const meldArea = this.updateMeldcardAreaRight(tiles.meldTiles[i]);
         if (null != meldArea) {
             area.addChild(meldArea);
         }
-        area.addChild(this.updateHoldcardAreaRight(tiles.meldTiles[i]));
+        area.addChild(this.updateHoldcardAreaRight(tiles.holdTiles[i]));
         area.layout({
             intervalY: 40,
             direction: 'right'
@@ -724,19 +764,19 @@ class GameStage extends BaseStage {
             c.addChild(area);
             area.position.set(x, y);
         }
-        // area = this.updateWallcardAreaUp(tiles.wallcards);
-        // y -= 100;
-        // if (null != area) {
-        //     c.addChild(area);
-        //     area.position.set(x, y);
-        // }
+        area = this.updateWallcardAreaUp(tiles.wallTiles[i]);
+        y -= 100;
+        if (null != area) {
+            c.addChild(area);
+            area.position.set(x, y);
+        }
 
         area = new QueueArea();
         const meldArea = this.updateMeldcardAreaUp(tiles.meldTiles[i]);
         if (null != meldArea) {
             area.addChild(meldArea);
         }
-        area.addChild(this.updateHoldcardAreaUp(tiles.meldTiles[i]));
+        area.addChild(this.updateHoldcardAreaUp(tiles.holdTiles[i]));
         area.layout({
             intervalX: 40,
             direction: 'up'
@@ -757,19 +797,19 @@ class GameStage extends BaseStage {
             c.addChild(area);
             area.position.set(x, y);
         }
-        // area = this.updateWallcardAreaLeft(tiles.wallcards);
-        // x -= 100;
-        // if (null != area) {
-        //     c.addChild(area);
-        //     area.position.set(x, y);
-        // }
+        area = this.updateWallcardAreaLeft(tiles.wallTiles[i]);
+        x -= 100;
+        if (null != area) {
+            c.addChild(area);
+            area.position.set(x, y);
+        }
 
         area = new QueueArea();
         const meldArea = this.updateMeldcardAreaLeft(tiles.meldTiles[i]);
         if (null != meldArea) {
             area.addChild(meldArea);
         }
-        area.addChild(this.updateHoldcardAreaLeft(tiles.meldTiles[i]));
+        area.addChild(this.updateHoldcardAreaLeft(tiles.holdTiles[i]));
         area.layout({
             intervalY: 40,
             direction: 'left'
@@ -875,8 +915,8 @@ class GameStage extends BaseStage {
             direction: 'down'
         });
 
-        c.showEdge();
-        this.showNodeInfo(c, 'down:')
+        // c.showEdge();
+        // this.showNodeInfo(c, 'down:')
 
         return c;
     }
@@ -1531,6 +1571,47 @@ class GameStage extends BaseStage {
         }
     }
 
+    onMouseDown(evt) {
+        if (!this.visible) {
+            return true;
+        }
+
+        const tag = 'selectableSuits';
+        let suits = null;
+        this.stage.children.forEach((child) => {
+            if (tag == child.tag) {
+                suits = child;
+            }
+        });
+        if (Utils.touchInSprite(evt.position, suits)) {
+            suits.children.forEach((child) => {
+                if (Utils.touchInSprite(evt.position, child)) {
+                    switch (child.tag) {
+                        case GameStage.CardSuitType.SUIT_DOT:
+                            {
+                                console.log('touch on dot');
+                                break;
+                            }
+                        case GameStage.CardSuitType.SUIT_BAMBOO:
+                            {
+                                console.log('touch on bamboo');
+                                break;
+                            }
+                        case GameStage.CardSuitType.SUIT_CHARACTER:
+                            {
+                                console.log('touch on character');
+                                break;
+                            }
+                        default:
+                            {
+                                break;
+                            }
+                    }
+                }
+            });
+        }
+    }
+
 }
 
 /*
@@ -1568,6 +1649,16 @@ GameStage.TileDir = {
     Horizontal: 1,
     Vertical: 2
 }
+
+GameStage.Phase = {
+    roomPhaseWaiting: 0,
+    roomPhaseShuffle: 1,
+    roomPhaseDealing: 2,
+    roomPhaseMakeAAbandon: 3,
+    roomPhasePlaying: 4,
+    roomPhaseSettle: 5
+}
+
 
 export {
     GameStage
