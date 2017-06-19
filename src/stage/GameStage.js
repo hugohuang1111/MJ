@@ -646,9 +646,9 @@ class GameStage extends BaseStage {
         const bamboo = Utils.createSprite(Constant.RES.SUIT_BAMBOO);
         const character = Utils.createSprite(Constant.RES.SUIT_CHARACTER);
 
-        dot.tag = GameStage.CardSuitType.SUIT_DOT;
-        bamboo.tag = GameStage.CardSuitType.SUIT_BAMBOO;
-        character.tag = GameStage.CardSuitType.SUIT_CHARACTER;
+        dot.tag = GameStage.CardSuitType.Dot;
+        bamboo.tag = GameStage.CardSuitType.Bamboo;
+        character.tag = GameStage.CardSuitType.Character;
 
         dot.position.set(-100, 0);
         character.position.set(100, 0);
@@ -1583,23 +1583,19 @@ class GameStage extends BaseStage {
                 suits = child;
             }
         });
+        if (null == suits) {
+            console.log('not find selectable suits');
+            return;
+        }
         if (Utils.touchInSprite(evt.position, suits)) {
             suits.children.forEach((child) => {
                 if (Utils.touchInSprite(evt.position, child)) {
                     switch (child.tag) {
-                        case GameStage.CardSuitType.SUIT_DOT:
+                        case GameStage.CardSuitType.Dot:
+                        case GameStage.CardSuitType.Bamboo:
+                        case GameStage.CardSuitType.Character:
                             {
-                                console.log('touch on dot');
-                                break;
-                            }
-                        case GameStage.CardSuitType.SUIT_BAMBOO:
-                            {
-                                console.log('touch on bamboo');
-                                break;
-                            }
-                        case GameStage.CardSuitType.SUIT_CHARACTER:
-                            {
-                                console.log('touch on character');
+                                Net.getInstance().abanbonSuit(child.tag);
                                 break;
                             }
                         default:

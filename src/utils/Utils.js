@@ -54,9 +54,11 @@ class Utils {
 
     static getRect(sp) {
         let startPoint = sp.toGlobal(new PIXI.Point(0, 0));
+        const anchorX = ('undefined' == typeof sp.anchor || null == sp.anchor) ? 0.5 : sp.anchor.x
+        const anchorY = ('undefined' == typeof sp.anchor || null == sp.anchor) ? 0.5 : sp.anchor.y
         return {
-            x: startPoint.x - sp.anchor.x * sp.width,
-            y: startPoint.y - sp.anchor.y * sp.height,
+            x: startPoint.x - anchorX * sp.width,
+            y: startPoint.y - anchorY * sp.height,
             width: sp.width,
             height: sp.height
         }

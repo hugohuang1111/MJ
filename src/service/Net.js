@@ -127,6 +127,15 @@ class Net {
         this.sendMsg(req);
     }
 
+    abanbonSuit(suitType) {
+        const req = {
+            version: 1,
+            type: 'room:abanbonSuit',
+            suit: suitType
+        };
+        this.sendMsg(req);
+    }
+
     sendMsg(req) {
         if (null == this.ws) {
             return;
