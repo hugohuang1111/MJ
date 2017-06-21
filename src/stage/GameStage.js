@@ -593,7 +593,7 @@ class GameStage extends BaseStage {
                 {
                     break;
                 }
-            case GameStage.Phase.roomPhaseMakeAAbandon: // dealing
+            case GameStage.Phase.roomPhaseMakeAAbandon: // abandon
                 {
                     const tag = 'selectableSuits';
                     let suits = null;
@@ -610,7 +610,6 @@ class GameStage extends BaseStage {
                     } else {
                         suits.visible = true;
                     }
-                    break;
                 }
             case GameStage.Phase.roomPhasePlaying: // playing
                 {
@@ -1556,6 +1555,10 @@ class GameStage extends BaseStage {
                                 this.sceneData = resp
                                 break;
                             }
+                        case 'abanbonSuit':
+                            {
+                                break;
+                            }
                         default:
                             {
                                 console.log('GameStage unknow cmd:' + cmds[1]);
@@ -1584,7 +1587,6 @@ class GameStage extends BaseStage {
             }
         });
         if (null == suits) {
-            console.log('not find selectable suits');
             return;
         }
         if (Utils.touchInSprite(evt.position, suits)) {

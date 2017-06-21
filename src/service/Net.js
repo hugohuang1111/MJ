@@ -73,6 +73,7 @@ class Net {
                     switch (cmds[1]) {
                         case "scene":
                         case "entry":
+                        case "abanbonSuit":
                             {
                                 this.onRoom.dispatch(msg);
                                 break;
